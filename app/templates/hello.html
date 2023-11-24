@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% import "macros.html" as macros %}
+{% import "bootstrap/wtf.html" as wtf %}
+<!-- Todo esto se hace con jinja2, por ello se usa 
+    su respectiva sintaxis -->
+<!-- hereda el bloque de base y lo sobreescribe, para evitarlo se coloca el super()
+con el objetivo de extender el bloque -->
+<!-- {{ super() }} -->
+{% block title %}
+    {{ super() }}
+    Bienvenido
+{% endblock %}
+
+{% block content %}
+    {% if username %}
+        <h1>Bienvenido, {{ username | capitalize }}</h1>
+    {% endif %}
+    {% if user_ip %}
+        <h3>Hello world, your ip is {{ user_ip }}</h3>
+    {% else %}
+    <!-- urlfor manda una ruta con solo poner el nombre de 
+        la funcion de dicha ruta. En este caso se quiere ir a la
+    ruta index-->
+        <a href="{{ url_for('index') }}">Go to index</a>
+    {% endif %}
+
+    <ul>
+        {% for todo in todos %}
+            {{ macros.render_todo(todo) }}
+        {% endfor %}
+    </ul>
+{% endblock %}
